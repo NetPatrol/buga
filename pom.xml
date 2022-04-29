@@ -41,7 +41,7 @@
     </properties>
 
     <modules>
-        <module>article-service</module>
+        <module>post-service</module>
     </modules>
     <dependencies>
         <!-- зависимости Spring Boot -->
