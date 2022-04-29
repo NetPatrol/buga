@@ -1,0 +1,46 @@
+server:
+  port: 8010
+
+#spring
+spring:
+  application:
+    name: article-service
+  
+  liquibase:
+    change-log: classpath:/db.changelog/db.changelog-master.xml
+    enabled: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: root
+    password: 9GA-UXi-jUI-@RU
+    url: jdbc:postgresql://localhost:5432/bugawa_article_db
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+#Приложение
+app:
+  api:
+    path: "/api"
+    v1:
+      post:
+        articles: "/v1/post/articles/articles"
+        announces: "/v1/post/articles/announces"
+        reviews: "/v1/post/articles/reviews"
+
+#openapi
+springdoc:
+  api-docs:
+    path: openapi
+  show-actuator: false
+  swagger-ui:
+    path: swagger-ui.html
+    disable-swagger-default-url: true
+
+openapi:
+  title: "Post microservice"
+  description: "сервис работы с публикациями различных типов"
+  docs: "документация готовится"
+  docs-url: "документация готовится"
