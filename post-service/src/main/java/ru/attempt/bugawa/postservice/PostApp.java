@@ -3,6 +3,7 @@ package ru.attempt.bugawa.postservice;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import ru.attempt.bugawa.lib.PostLibConfig;
@@ -12,6 +13,7 @@ import ru.attempt.bugawa.lib.PostLibConfig;
  */
 @Slf4j
 @SpringBootApplication
+@EnableEurekaClient
 @Import(PostLibConfig.class)
 @EnableJpaRepositories("ru.attempt.bugawa.postservice.repository")
 public class PostApp {
