@@ -4,15 +4,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- *
+ * Класс мета данных, содержащий тэги API для отображения в swagger
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostOpenApiTag {
-
-	/**
-	 * Метка для описания API анонсов.
-	 */
-	public static final String ANNOUNCE_API_TAG = "API анонсов";
 
 	/**
 	 * Метка для описания API статей.

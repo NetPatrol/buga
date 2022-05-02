@@ -1,8 +1,8 @@
 package ru.attempt.bugawa.postservice.mapper;
 
-import lombok.NonNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import ru.attempt.bugawa.postservice.model.dto.request.ArticleRequest;
 import ru.attempt.bugawa.postservice.model.dto.response.ArticleResponse;
 import ru.attempt.bugawa.postservice.model.entity.Article;
@@ -10,37 +10,37 @@ import ru.attempt.bugawa.postservice.model.entity.Article;
 import java.util.List;
 
 /**
- *
+ * Маппер сущности статьи и DTO статьи
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = ReviewMapper.class)
 public interface ArticleMapper {
-	/**
-	 * @param request
-	 *
-	 * @return
-	 */
-	@Mapping(target = "create", ignore = true)
-	@Mapping(target = "lastEdit", ignore = true)
-	@Mapping(target = "delete", ignore = true)
-	@Mapping(target = "status", ignore = true)
-	@Mapping(target = "like", ignore = true)
-	@Mapping(target = "dislike", ignore = true)
-	@Mapping(target = "reviews", ignore = true)
-	@Mapping(target = "count", ignore = true)
-	Article toEntity (@NonNull ArticleRequest request);
 
 	/**
-	 * @param article
+	 * @param request DTO модели запроса статьи
 	 *
-	 * @return
+	 * @return сущность статьи
 	 */
-	ArticleResponse toResponse (Article article);
+	@Mappings(
+			{
+					@Mapping(target = "author", source = "author"),
+					@Mapping(target = "header", source = "header"),
+					@Mapping(target = "body", source = "body")
+			}
+	)
+	Article toEntity (final ArticleRequest request);
 
 	/**
-	 * @param articles
+	 * @param article сущность анонса
 	 *
-	 * @return
+	 * @return DTO модели ответа
 	 */
-	@NonNull List<ArticleResponse> toResponseList (List<Article> articles);
+	ArticleResponse toResponse (final Article article);
+
+	/**
+	 * @param articles массив сущностей анонсов
+	 *
+	 * @return массив DTO моделей ответа
+	 */
+	List<ArticleResponse> toResponseList (final List<Article> articles);
 
 }

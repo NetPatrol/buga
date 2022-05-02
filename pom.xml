@@ -2,20 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>ru.attempt</groupId>
     <artifactId>bugawa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
     <name>bugawa</name>
     <description>
         сервис постов и комментариев
     </description>
+
     <properties>
         <java.version>17</java.version>
 
@@ -37,12 +40,16 @@
 
         <lombok-version>1.18.20</lombok-version>
         <mapstruct-version>1.4.2.Final</mapstruct-version>
-        <jetbrains-annotations-version>22.0.0</jetbrains-annotations-version>
+        <jetbrains-annotations-version>23.0.0</jetbrains-annotations-version>
     </properties>
 
+    <!-- модули проекта -->
     <modules>
         <module>post-service</module>
     </modules>
+    <!-- end region -->
+
+    <!-- зависимости проекта -->
     <dependencies>
         <!-- зависимости Spring Boot -->
         <dependency>
@@ -132,7 +139,9 @@
         <!-- end region -->
 
     </dependencies>
+    <!-- end region -->
 
+    <!-- конфигурация сборки проекта -->
     <build>
         <plugins>
             <plugin>
@@ -176,6 +185,11 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${mapstruct-version}</version>
                         </path>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                            <version>2.0.4.RELEASE</version>
+                        </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
                         <arg>-verbose</arg>
@@ -210,5 +224,6 @@
             </plugin>
         </plugins>
     </build>
+    <!-- end region -->
 
 </project>

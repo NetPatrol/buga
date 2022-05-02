@@ -7,7 +7,7 @@
         <groupId>ru.attempt</groupId>
         <artifactId>bugawa</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>ru.attempt.bugawa</groupId>
@@ -15,6 +15,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>post-service</name>
+
     <description>
         Сервис, предоставляющий API интерфейсы для работы с публикациями статей, аннонсов и обзоров на эти статьи
     </description>
@@ -23,16 +24,16 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <publishing-lib-vesion>0.3.0-SNAPSHOT</publishing-lib-vesion>
+        <post-lib-vesion>0.3.0-SNAPSHOT</post-lib-vesion>
     </properties>
 
     <!--region зависимости модуля проекта -->
     <dependencies>
         <!-- собственные библиотеки -->
         <dependency>
-            <groupId>ru.attempt.lib</groupId>
-            <artifactId>publishing-lib</artifactId>
-            <version>${publishing-lib-vesion}</version>
+            <groupId>ru.attempt.bugawa.lib</groupId>
+            <artifactId>post-lib</artifactId>
+            <version>${post-lib-vesion}</version>
             <scope>compile</scope>
         </dependency>
         <!-- end region -->

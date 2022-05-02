@@ -18,7 +18,7 @@ import java.net.URI;
 @Validated
 @Configuration
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public class AppConfig {
+public class ApiConfig {
 
 	@NotNull
 	private Api api;
@@ -46,6 +46,7 @@ public class AppConfig {
 		@Validated
 		@NoArgsConstructor
 		static class V1 {
+
 			/**
 			 * Ресурс публикаций.
 			 */
@@ -63,12 +64,6 @@ public class AppConfig {
 				 */
 				@NotNull
 				private URI articles;
-
-				/**
-				 * Ресурс анонсов сервиса публикаций.
-				 */
-				@NotNull
-				private URI announces;
 
 				/**
 				 * Ресурс обзоров сервиса публикаций.

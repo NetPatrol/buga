@@ -4,9 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <include file="db.changelog/changeset/init-db.sql"/>
-    <include file="db.changelog/changeset/29-01-changelog.xml"/>
-    <include file="db/changelog/changeset/changelog-announce-table.sql"/>
+    <include file="db.changelog/db.changelog-master.xml"/>
     <include file="db/changelog/changeset/changelog-article-table.sql"/>
     <include file="db/changelog/changeset/changelog-review-table.sql"/>
 </databaseChangeLog>

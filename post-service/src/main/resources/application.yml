@@ -5,20 +5,21 @@ server:
 spring:
   application:
     name: article-service
-  
   liquibase:
     change-log: classpath:/db.changelog/db.changelog-master.xml
-    enabled: true
+    enabled: false
+    default-schema: post
   datasource:
     driver-class-name: org.postgresql.Driver
     username: root
     password: 9GA-UXi-jUI-@RU
-    url: jdbc:postgresql://localhost:5432/bugawa_article_db
-  
+    url: jdbc:postgresql://localhost:5432/bugawa_post_service_db
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
 
 #Приложение
 app:
@@ -26,21 +27,14 @@ app:
     path: "/api"
     v1:
       post:
-        articles: "/v1/post/articles/articles"
-        announces: "/v1/post/articles/announces"
-        reviews: "/v1/post/articles/reviews"
+        articles: "/v1/post/articles"
+        reviews: "/v1/post/reviews"
 
 #openapi
 springdoc:
   api-docs:
-    path: openapi
+    path: "/openapi"
   show-actuator: false
   swagger-ui:
     path: swagger-ui.html
     disable-swagger-default-url: true
-
-openapi:
-  title: "Post microservice"
-  description: "сервис работы с публикациями различных типов"
-  docs: "документация готовится"
-  docs-url: "документация готовится"

@@ -11,12 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.attempt.buga.lib.api.Api;
-import ru.attempt.buga.lib.api.PostApiV1;
-import ru.attempt.buga.lib.model.error.ErrorMessage;
-import ru.attempt.buga.lib.service.PostService;
+import ru.attempt.bugawa.lib.api.PostApiV1;
+import ru.attempt.bugawa.lib.model.error.ErrorMessage;
+import ru.attempt.bugawa.lib.service.PostService;
 import ru.attempt.bugawa.postservice.model.dto.request.ArticleRequest;
 import ru.attempt.bugawa.postservice.model.dto.response.ArticleResponse;
 
@@ -29,15 +29,15 @@ import static org.springframework.http.ResponseEntity.ok;
 import static ru.attempt.bugawa.postservice.meta.PostOpenApiTag.ARTICLE_API_TAG;
 
 /**
- * Контроллер. Реализует API интерфейс статей.
+ * Контроллер. Реализует общий API интерфейс параметризованный типом модели запроса статьи.
  */
 @Slf4j
 @RestController
 @Tag(name = ARTICLE_API_TAG)
 @RequestMapping("${app.api.path}" + "${app.api.v1.post.articles}")
-public class ArticleControllerImpl implements Api, PostApiV1<ArticleRequest, String> {
+public class ArticleControllerImpl implements PostApiV1<ArticleRequest> {
 
-	private final PostService<ArticleResponse, ArticleRequest, String> service;
+	private final PostService<ArticleResponse, ArticleRequest> service;
 
 	/**
 	 * Конструктор
@@ -45,7 +45,7 @@ public class ArticleControllerImpl implements Api, PostApiV1<ArticleRequest, Str
 	 * @param service
 	 * 		сервис статей
 	 */
-	public ArticleControllerImpl (@NonNull final PostService<ArticleResponse, ArticleRequest, String> service) {
+	public ArticleControllerImpl (@NonNull final PostService<ArticleResponse, ArticleRequest> service) {
 		this.service = service;
 	}
 
@@ -62,29 +62,12 @@ public class ArticleControllerImpl implements Api, PostApiV1<ArticleRequest, Str
 			}
 	)
 	@Override
-	@PostMapping
+	@PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public @NonNull ResponseEntity<?> save (@NonNull final ArticleRequest request) {
+		log.info("передача запроса в сервис и получение ответа");
 		final ArticleResponse response = service.save(request);
+		log.info("запрос на сохранение успешно выполнен");
 		return ok(response);
-	}
-
-	@Operation(summary = "предоставляет набор всех имеющихся в БД публикаций статей",
-			responses = {
-					@ApiResponse(responseCode = "200", description = "массив всех публикаций статей",
-							content = @Content(
-									mediaType = APPLICATION_JSON_VALUE,
-									schema = @Schema(implementation = ArticleResponse.class))),
-					@ApiResponse(responseCode = "400", description = "отсутствуют записи в БД",
-							content = @Content(
-									mediaType = APPLICATION_JSON_VALUE,
-									schema = @Schema(implementation = ErrorMessage.class)))
-			}
-	)
-	@Override
-	@GetMapping(produces = APPLICATION_JSON_VALUE)
-	public @NonNull ResponseEntity<?> findAll () {
-		final List<ArticleResponse> response = service.findAll();
-		return response.isEmpty() ? badRequest().build() : ok(response);
 	}
 
 	@Operation(summary = "предоставляет запрошенную по ключу публикацию статьи",
@@ -100,9 +83,10 @@ public class ArticleControllerImpl implements Api, PostApiV1<ArticleRequest, Str
 			}
 	)
 	@Override
-	@GetMapping(params = "key", produces = APPLICATION_JSON_VALUE)
-	public @NonNull ResponseEntity<?> findByKey (@NonNull final String key) {
-		final List<ArticleResponse> response = service.findByKey(key);
+	@GetMapping(produces = APPLICATION_JSON_VALUE)
+	public @NonNull ResponseEntity<?> findByAuthor (@NonNull final String key) {
+		log.info("выполняется поиск по автору: " + key);
+		final List<ArticleResponse> response = service.findByAuthor(key);
 		return ok().body(response);
 	}
 
@@ -124,9 +108,11 @@ public class ArticleControllerImpl implements Api, PostApiV1<ArticleRequest, Str
 			}
 	)
 	@Override
-	@PostMapping("edit")
+	@PutMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public @NonNull ResponseEntity<?> edit (@NonNull final ArticleRequest request) {
+		log.info("передача запроса в сервис и получение ответа");
 		final ArticleResponse response = service.edit(request);
+		log.info("запрос на редактирование успешно выполнен");
 		return ok(response);
 	}
 
@@ -143,8 +129,9 @@ public class ArticleControllerImpl implements Api, PostApiV1<ArticleRequest, Str
 			}
 	)
 	@Override
-	@DeleteMapping
+	@DeleteMapping(produces = APPLICATION_JSON_VALUE)
 	public @NonNull ResponseEntity<?> delete (@NonNull final UUID id) {
+		log.info("передача запроса в сервис и получение ответа");
 		service.deleteById(id);
 		return service.isExists(id) ? badRequest().build() : ok("Объект успешно удален");
 	}
